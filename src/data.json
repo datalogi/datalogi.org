@@ -1,0 +1,92 @@
+[
+    {
+        "word": "bagstreg",
+        "conjugation": "-en, -er, -erne",
+        "translation": "backslash",
+        "definition": [
+            "Typografisk symbol ( \\ ).",
+            "Bagstreg har ASCII-værdien 92 og repræsenteres i unicode som U+005C.",
+            "Kan også kaldes undvigelsestegn."
+        ],
+        "origin": [
+            "Tegnet er opstået ved direkte spejlvending af den almindelige skråstreg i 1960'erne ifølge Wikipedia."
+        ],
+        "related_words": [
+            "emneknage",
+            "datakage",
+            "spejdertræ",
+            "datasnog"
+        ]
+    },
+    {
+        "word": "sikkerhedskopi",
+        "conjugation": "-en, -er, -erne",
+        "translation": "backup",
+        "definition": [
+            "Ekstern kopi af data.",
+            "Kan bruges til data, man ikke vil miste ved sammenbrud eller uheld."
+        ],
+        "origin": [
+        ],
+        "related_words": [
+            "emneknage",
+            "datakage",
+            "spejdertræ",
+            "datasnog"
+        ]
+    },
+    {
+        "word": "returtast",
+        "conjugation": "-en, -er, -erne",
+        "translation": "enter",
+        "definition": [
+            "Tast. Returtasten indsætter typisk et linjeskift.",
+            "På et dansk tastatur er returtasten i højre side.",
+            "Returtasten bliver også brugt til at igangsætte afviklingen af kommandoer."
+        ],
+        "origin": [
+            "Kendt fra 1996."
+        ],
+        "related_words": [
+            "emneknage",
+            "datakage",
+            "spejdertræ",
+            "datasnog"
+        ]
+    },
+    {
+        "word": "fastpladelager",
+        "conjugation": "-et, fastpladelagre (eller -e), fastpladelagrene (eller -ne)",
+        "translation": "harddisk",
+        "definition": [
+            "Et fastpladelager består af magnetiske plader, som kan opbevare data i binær form.",
+            "Data bibeholdes, selvom fastpladelagret ikke tilføres strøm."
+        ],
+        "origin": [
+            "De første fastpladelagre blev udviklet af IBM i 1956."
+        ],
+        "related_words": [
+            "emneknage",
+            "datakage",
+            "spejdertræ",
+            "datasnog"
+        ]
+    },
+    {
+        "word": "bundkort",
+        "conjugation": "-et, -, -ene",
+        "translation": "mortherboard",
+        "definition": [
+            "Central printplade i en datamat. Bundkortet forbinder datamatens komponeneter."
+        ],
+        "origin": [
+            "Normalt siger man, at det første bundkort blev udviklet af IBM i 1981."
+        ],
+        "related_words": [
+            "emneknage",
+            "datakage",
+            "spejdertræ",
+            "datasnog"
+        ]
+    }
+]

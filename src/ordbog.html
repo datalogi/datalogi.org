@@ -1,0 +1,58 @@
+{% extends "menu.html" %}
+{% block title %}Ordbog – SND{% endblock %}
+
+{% block menu_ordbog %}class="active"{% endblock %}
+
+{% block content %}
+<h1>Ordbog</h1>
+
+<article style="width: 30em">
+    <textarea id="translatee" onkeyup="translate();" onchange="translate();"></textarea>
+    <a id="translation"></a>
+    <div>
+        <span id="t1">Dansk</span>
+        <button onclick="flipLanguage();" style="border-radius: 50%"> ⇆ </button>
+        <span id="t2">Engelsk</span>
+    </div>
+</article>
+
+
+<script>
+
+var fromDanish = true;
+var danishToEnglish = { {{ danish_to_english|safe }} };
+var englishToDanish = { {{ english_to_danish|safe }} };
+
+function flipLanguage() {
+    fromDanish = !fromDanish;
+    var t1 = document.getElementById("t1");
+    var t2 = document.getElementById("t2");
+    var tempText = t1.innerHTML;
+    t1.innerHTML = t2.innerHTML;
+    t2.innerHTML = tempText;
+    
+    var tr1 = document.getElementById("translatee");
+    var tr2 = document.getElementById("translation");
+    if (tr2.innerHTML != "undefined") {
+        // if the user wrote in the wrong language, we shold just flip the
+        // languages and not the text
+        var tempText = tr1.value;  // cross browser?
+        tr1.value = tr2.innerHTML;
+        tr2.innerHTML = tempText;
+    }
+
+    translate();
+}
+
+function translate() {
+    var input = document.getElementById("translatee").value.toLowerCase().trim();
+    var translationDict = fromDanish ? danishToEnglish : englishToDanish;
+    var out = document.getElementById("translation");
+    out.innerHTML = translationDict[input];
+    out.href = "leksikon/" + (fromDanish ? input : out.innerHTML) + ".html";
+}
+
+window.onload = translate;
+
+</script>
+{% endblock %}

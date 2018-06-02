@@ -1,0 +1,95 @@
+{% extends "menu.html" %}
+{% block title %}
+{{ entry_name }} – SND Leksikon
+{% endblock %}
+
+{% block style %}
+{{ super() }}
+h2 {
+    margin-bottom: 5px;
+}
+
+h3 {
+    border-bottom: 1px solid #E31836;
+    padding-bottom: 0px;
+    margin-bottom: -5px;
+}
+
+.label {
+    display: inline-block;
+    border: 1px solid #CCCCCC;
+    letter-spacing: 0.05em;
+}
+
+#result {
+    width: 30em;
+    position: absolute;
+}
+
+
+#related-words a {
+    display: block;
+    text-decoration: none;
+    padding: 3px;
+}
+
+footer {
+    padding: 0px;
+    position: absolute;
+    border-top: 1px solid #CCCCCC;
+    width: 100%;
+}
+
+footer p {
+    font-size: 0.7em;
+}
+{% endblock %}
+
+{% block menu_leksikon %}class="active"{% endblock %}
+
+{% block content %}
+<article id="result">
+    <section><h2>{{ entry_name }}</h2>
+    <span class="label">BØJNING</span>
+    <i>{{ conjugation }}</i></section>
+    <span class="label">ENGELSK</span>
+    <i>{{ translation }}</i></section>
+
+    <section><h3>Betydning</h3>
+    <div id="definition">
+        {% for line in definition %}
+        <p>{{ line }}</p>
+        {% endfor %}
+    </div></section>
+
+    {% if origin %}
+    <section><h3>Oprindelse</h3>
+    <div>
+        {% for line in origin %}
+        <p>{{ line }}</p>
+        {% endfor %}
+    </div></section>
+    {% endif %}
+
+    <aside><h3>Se også</h3>
+    <div id="related-words">
+        <p>
+            {% for word in related_words %}
+            <a href="./{{ word }}.html">{{ word }}</a>
+            {% endfor %}
+        </p>
+    </div></aside>
+
+    <footer>
+        <p>Denne tekst blev senest ændret den 1. januar 1970 kl.
+        13:37.</p>
+        <p>Tekst er tilgængelig under
+        <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.da">
+            Creative Commons Navngivelse/Del på samme vilkår 3.0
+        </a>.</p>
+        <p>Kode er tilgængelig under en
+        <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.da">
+            MIT licens</a>.</p>
+    </footer>
+</article>
+{% endblock %}
