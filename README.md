@@ -1,12 +1,12 @@
 # datalogi.org
 Den her programbank indeholder koden til at generere filerne til
-https://datanomi.org.
+https://datalogi.org.
 
 
 ## Intallér dependencies
 
 ``` bash
-$ pip install Jinja2
+$ pip install -r requirements.txt
 ```
 
 
