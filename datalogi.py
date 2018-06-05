@@ -6,24 +6,19 @@
     a danish nonprofit established to further the danish language.
 """
 
-import errno
 import json
+from pathlib import Path
 import os
+import shutil
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
-# make dirs if they do not exist
-try:
-    os.makedirs('build')
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise
-try:
-    os.makedirs('build/leksikon')
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise
+build_dir = Path('./build')
+
+shutil.rmtree(build_dir)
+
+Path(build_dir, 'leksikon').mkdir(parents=True)
 
 
 with open('src/data.json', 'r', encoding='utf-8') as f:
