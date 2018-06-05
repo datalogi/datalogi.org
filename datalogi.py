@@ -14,7 +14,8 @@ import shutil
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
-build_dir = Path('./build')
+build_dir = Path('./build/')
+source_dir = Path('./src/')
 
 try:
     shutil.rmtree(build_dir)
@@ -24,11 +25,11 @@ except FileNotFoundError:
 Path(build_dir, 'leksikon').mkdir(parents=True)
 
 
-with open('src/data.json', 'r', encoding='utf-8') as f:
+with open(Path(source_dir, 'data.json'), 'r', encoding='utf-8') as f:
     lexicon = json.load(f)
 
 env = Environment(
-    loader=FileSystemLoader(['src/']),
+    loader=FileSystemLoader([source_dir]),
     autoescape=select_autoescape(['html']),
 )
 
