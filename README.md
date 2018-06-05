@@ -33,7 +33,7 @@ $ python datalogi.py
 ```
 
 
-## Local server
+## Lokal server
 
 Det er en god ide at køre en lokal server, så relative stier virker
 (bl. a. menuen). Til det, kan du bruge følgende kommando:
