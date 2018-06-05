@@ -35,7 +35,7 @@ env = Environment(
 
 lexicon_template = env.get_template('leksikon_template.html')
 for entry in lexicon:
-    with open('build/leksikon/%s.html' % entry['word'], 'w+') as f:
+    with open(Path(build_dir, 'leksikon', entry['word'] + '.html'), 'w+') as f:
         f.write(lexicon_template.render(
             entry_name=entry['word'],
             conjugation=entry['conjugation'],
@@ -46,12 +46,12 @@ for entry in lexicon:
         ))
 
 
-with open('build/leksikon.html', 'w+') as f:
+with open(Path(build_dir, 'leksikon.html'), 'w+') as f:
     f.write(env.get_template('leksikon.html').render(
         entries=[entry['word'] for entry in lexicon]))
 
 
-with open('build/ordbog.html', 'w+') as f:
+with open(Path(build_dir, 'ordbog.html'), 'w+') as f:
     entry_template = r'%s: "%s"'
     danish = []
     english = []
@@ -66,5 +66,5 @@ with open('build/ordbog.html', 'w+') as f:
 
 no_input_files = ['forslag', 'index', 'medlemskab']
 for filename in no_input_files:
-    with open('build/%s.html' % filename, 'w+') as f:
+    with open(Path(build_dir, filename + '.html'), 'w+') as f:
         f.write(env.get_template(filename + '.html').render())
