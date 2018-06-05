@@ -16,7 +16,10 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 build_dir = Path('./build')
 
-shutil.rmtree(build_dir)
+try:
+    shutil.rmtree(build_dir)
+except FileNotFoundError:
+    pass
 
 Path(build_dir, 'leksikon').mkdir(parents=True)
 
