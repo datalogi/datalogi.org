@@ -8,7 +8,6 @@
 
 import json
 from pathlib import Path
-import os
 import shutil
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -16,12 +15,14 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 build_dir = Path('./build/')
 source_dir = Path('./src/')
+static_dir = Path(source_dir, 'static')
 
 try:
     shutil.rmtree(build_dir)
 except FileNotFoundError:
     pass
 
+shutil.copytree(static_dir, build_dir)
 Path(build_dir, 'leksikon').mkdir(parents=True)
 
 
