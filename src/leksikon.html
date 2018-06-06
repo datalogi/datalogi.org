@@ -1,12 +1,12 @@
 {% extends "menu.html" %}
 
-{% block title %}Datalogi Leksikon{% endblock %}
+{% block title %}Leksikon – SND{% endblock %}
 
 {% block menu_leksikon %}class="active"{% endblock %}
 
 {% block content %}
 <article>
-    <h1>Datalogi Leksikon</h1>
+    <h1>Leksikon</h1>
     <ul>
         {% for entry in entries %}
         <li><a href="./leksikon/{{ entry }}.html">{{ entry }}</a></li>
