@@ -1,45 +1,5 @@
 {% extends "base.html" %}
 
-{% block style %}
-{{ super() }}
-
-#content {
-    display: flex;
-    height: 100%;
-}
-
-#vertical-menu {
-    display: inline-block;
-    background-color: #eee;
-    border-right: 1px solid #CCCCCC;
-    margin-right: 0.5em;
-}
-
-#vertical-menu a {
-    color: #000000;
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-}
-
-#vertical-menu a:hover {
-    background-color: #ccc;
-}
-
-#vertical-menu a.active {
-    background-color: #666666;
-    color: #fafafa;
-}
-
-#vertical-menu > a:nth-child(1) {
-    background-color: #E31836;
-    text-align: center;
-    color: #FFFFFF;
-    padding-top: 14px;
-    padding-bottom: 14px;
-}
-{% endblock %}
-
 {% block body %}
 <div id="content">
     <nav id="vertical-menu">

@@ -1,22 +1,7 @@
 <!DOCTYPE html>
 <title>{% block title %}{% endblock %}</title>
+
 <style>
-html, body {
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-    font-family: sans-serif;
-}
-
-p {
-    font-size: 0.875em;
-    color: #222222;
-}
-
-h1 {
-    font-family: Georgia, serif;
-    font-size: 260%;
-}
 {% block style %}
 {% endblock %}
 </style>
@@ -26,6 +11,7 @@ h1 {
 <meta name="keywords" content="{{ keywords }}">
 <meta name="author" content="Dansk Datanomisk Sprognævn">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/style.css">
 
 {% block body %}
 {% endblock %}
