@@ -1,58 +1,215 @@
 {% extends "menu.html" %}
 {% block title %}Ordbog – SND{% endblock %}
-
+n
 {% block menu_ordbog %}class="active"{% endblock %}
 
 {% block content %}
 <h1>Ordbog</h1>
 
 <article style="width: 30em">
-    <textarea id="translatee" onkeyup="translate();" onchange="translate();"></textarea>
-    <a id="translation"></a>
     <div>
         <span id="t1">Dansk</span>
-        <button onclick="flipLanguage();" style="border-radius: 50%"> ⇆ </button>
+        <button onclick="flipLanguage();" style="border-radius: 50%">⇆</button>
         <span id="t2">Engelsk</span>
+    </div>
+    <textarea id="translatee" maxlength="50" onkeyup="update();" onchange="update();"></textarea>
+    <span id="translation"></span>
+
+    <div>
+        <span id="suggestionsTitle"></span>
+        <ul id="suggestions">
+            
+        </ul>
     </div>
 </article>
 
 
 <script>
 
-var fromDanish = true;
-var danishToEnglish = { {{ danish_to_english|safe }} };
-var englishToDanish = { {{ english_to_danish|safe }} };
+ var fromDanish = true;
+ var danishToEnglish = { {{ danish_to_english|safe }} };
+ var englishToDanish = { {{ english_to_danish|safe }} };
 
-function flipLanguage() {
-    fromDanish = !fromDanish;
-    var t1 = document.getElementById("t1");
-    var t2 = document.getElementById("t2");
-    var tempText = t1.innerHTML;
-    t1.innerHTML = t2.innerHTML;
-    t2.innerHTML = tempText;
-    
-    var tr1 = document.getElementById("translatee");
-    var tr2 = document.getElementById("translation");
-    if (tr2.innerHTML != "undefined") {
-        // if the user wrote in the wrong language, we shold just flip the
-        // languages and not the text
-        var tempText = tr1.value;  // cross browser?
-        tr1.value = tr2.innerHTML;
-        tr2.innerHTML = tempText;
-    }
+ function flipLanguage() {
+     fromDanish = !fromDanish;
+     var lang1 = document.getElementById("t1");
+     var lang2 = document.getElementById("t2");
+     var tempText = lang1.innerHTML;
+     lang1.innerHTML = lang2.innerHTML;
+     lang2.innerHTML = tempText;
+     
+     var word1 = document.getElementById("translatee");
+     var word2 = document.getElementById("translation");
+     if (word2.firstChild.nodeName == "A") {
+         // if the user wrote in the wrong language, we shold just flip the
+         // languages and not the text
+         var tempText = word1.value;  // cross browser?
+         word1.value = word2.firstChild.innerHTML; // text of <a> in <span>
+         word2.innerHTML = tempText;
+     }
+     
+     update();
+ }
 
-    translate();
-}
+ function update() {
+     translate();
+     writeSuggestions();
+ }
 
-function translate() {
-    var input = document.getElementById("translatee").value.toLowerCase().trim();
-    var translationDict = fromDanish ? danishToEnglish : englishToDanish;
-    var out = document.getElementById("translation");
-    out.innerHTML = translationDict[input];
-    out.href = "leksikon/" + (fromDanish ? input : out.innerHTML) + ".html";
-}
+ function translate() {
+     var input = document.getElementById("translatee").value.toLowerCase().trim();
+     var translationDict = fromDanish ? danishToEnglish : englishToDanish;
+     var out = document.getElementById("translation");
+     var translation = translationDict[input];
+     
+     if(typeof translation != "undefined") {
+         var a = document.createElement("a");
+         a.href = "leksikon/" + (fromDanish ? input : translation) + ".html";
+         a.innerHTML = translation;
+         out.innerHTML = "";
+         out.appendChild(a);
+         out.style.color = "black";
+     }
+     else if(input.length == 0) {
+         out.innerHTML = "Skriv et ord for at oversætte.";
+         out.style.color = "grey";
+     }
+     else {
+         out.innerHTML = "Ingen oversættelse fundet."
+         out.style.color = "grey";
+     }
+ }
 
-window.onload = translate;
+ /**
+  * Writes list of suggestions for words to translate, depending on what has
+  * been (partly) typed.
+  *
+  * If no input has been typed:
+  *     Write a list of all words in alphabetical order.
+  * If some input has been typed:
+  *     Write a list of words containing every word w for which
+  *     lcs(w, input).length is at least 40% of input.length.  Sort from
+  *     largest to smallest lcs(w, input), solving ties by sorting from
+  *     largests to smallest lcp(w, input), solving ties by alphabetical
+  *     ordering.
+  *
+  */
+ function writeSuggestions() {
+     var input = document.getElementById("translatee").value.toLowerCase().trim();
+     var list  = document.getElementById("suggestions");
+     var words = Object.keys(fromDanish ? danishToEnglish : englishToDanish);
+
+     list.innerHTML = "";
+     if(input.length == 0) {
+         document.getElementById("suggestionsTitle").innerHTML = "Prøv et af disse ord:";
+         words.sort().forEach(
+             w => addLi(list, clickableSuggestion(w, w))
+         );
+     }
+     else {
+         document.getElementById("suggestionsTitle").innerHTML = "Mener du et af disse ord?";
+         var lcss = {};
+         var lcps = {};
+         words.forEach(w => {
+             lcss[w] = lcs(w, input);
+             lcps[w] = lcp(w, input);
+         });
+         words.sort((a, b) => {
+             if(lcss[a].length !== lcss[b].length)
+                 return lcss[b].length - lcss[a].length;
+             else
+                 return lcps[b].length - lcps[a].length;
+         });
+         words.forEach(
+             w => {
+                 if(lcss[w].length >= 0.4*w.length)
+                     addLi(list, clickableSuggestion(w, boldify(w, lcss[w])));
+             }
+         );
+     }
+ }
+
+ function setInput(w) {
+     document.getElementById("translatee").value = w;
+     return false;
+ }
+
+ function clickableSuggestion(w, htmlWord) {
+     return '<a href="#" onclick="setInput(\''+w+'\');update();">'+htmlWord+'</a>';
+ }
+
+ function boldify(w, subseq) {
+     var htmlWord = "";
+     var idx = 0;
+     for(var i = 0; i < subseq.length; i++) {
+         while(subseq.charAt(i) != w.charAt(idx)) {
+             htmlWord += w.charAt(idx);
+             idx++;
+         }
+         if(idx < w.length) {
+             htmlWord += "<strong>"+w.charAt(idx)+"</strong>";
+             idx++;
+         }
+     }
+     for(idx; idx < w.length; idx++)
+         htmlWord += w.charAt(idx);
+     return htmlWord;
+ }
+
+ /**
+  * Adds item to an HTML list.
+  * @param list An ol or ul HTML element.
+  * @param item A string with the text to add on a new item.
+  */
+ function addLi(list, item) {
+     var li = document.createElement("li");
+     li.innerHTML = item;
+     list.appendChild(li);
+ }
+
+ /**
+  * Finds the Longest Common Subsequence of two strings.
+  */
+ function lcs(s1, s2) {
+     var best = emptyTable2(s1.length+1, s2.length+1, "");
+     for(var i = 0; i <= s1.length; i++) {
+         for(var j = 0; j <= s2.length; j++) {
+             if(s1.charAt(i) === s2.charAt(j)) {
+                 if(i < s1.length && j < s2.length
+                    && best[i][j].length+1 > best[i+1][j+1].length)
+                     best[i+1][j+1] = best[i][j]+s1.charAt(i);
+             }
+             if(i < s1.length && best[i][j].length > best[i+1][j].length)
+                 best[i+1][j] = best[i][j];
+             if(j < s2.length && best[i][j].length > best[i][j+1].length)
+                 best[i][j+1] = best[i][j];
+         }
+     }
+     return best[s1.length][s2.length];
+ }
+
+ /**
+  * Finds the Longest Common Prefix of two strings.
+  */
+ function lcp(s1, s2) {
+     for(var i = 0; i < Math.min(s1.length, s2.length); i++)
+         if(s1.charAt(i) !== s2.charAt(i))
+             return s1.substring(0, i);
+     return s1.length > s2.length ? s2 : s1;
+ }
+
+ function emptyTable2(a, b, val) {
+     var table = [];
+     for(var i = 0; i < a; i++) {
+         table.push([]);
+         for(j = 0; j < b; j++) {
+             table[i].push(val);
+         }
+     }
+     return table;
+ }
+
+ window.onload = update;
 
 </script>
 {% endblock %}
