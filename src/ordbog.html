@@ -43,7 +43,7 @@ n
      if (word2.firstChild.nodeName == "A") {
          // if the user wrote in the wrong language, we shold just flip the
          // languages and not the text
-         var tempText = word1.value;  // cross browser?
+         var tempText = word1.value;
          word1.value = word2.firstChild.innerHTML; // text of <a> in <span>
          word2.innerHTML = tempText;
      }
