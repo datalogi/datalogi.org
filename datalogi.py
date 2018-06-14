@@ -52,8 +52,6 @@ with open(Path(build_dir, 'leksikon.html'), 'w+') as f:
     f.write(env.get_template('leksikon.html').render(
         entries=[entry['word'] for entry in lexicon]))
 
-with open(Path(build_dir, '404.html'), 'w+') as f:
-    f.write(env.get_template('404.html').render())
 
 with open(Path(build_dir, 'ordbog.html'), 'w+') as f:
     entry_template = r'%s: "%s"'
