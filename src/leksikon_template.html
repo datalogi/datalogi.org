@@ -12,45 +12,47 @@
 
 {% block content %}
 <article id="result">
-    <section><h2>{{ entry_name }}</h2>
-    <span class="label">BØJNING</span>
-    <i>{{ conjugation }}</i></section>
-    <span class="label">ENGELSK</span>
-    <i>{{ translation }}</i></section>
+    <h2>{{ entry_name }}</h2>
+    <div><span class="label">BØJNING</span><i>{{ conjugation }}</i></div>
+    <div><span class="label">ENGELSK</span><i>{{ translation }}</i></div>
 
-    <section><h3>Betydning</h3>
-    <div id="definition">
-        {% for line in definition %}
-        <p>{{ line }}</p>
-        {% endfor %}
-    </div></section>
+    <section>
+        <h3>Betydning</h3>
+        <div id="definition">
+            {% for line in definition %}
+            <p>{{ line }}
+            {% endfor %}
+        </div>
+    </section>
 
     {% if origin %}
-    <section><h3>Oprindelse</h3>
-    <div>
-        {% for line in origin %}
-        <p>{{ line }}</p>
-        {% endfor %}
-    </div></section>
+    <section>
+        <h3>Oprindelse</h3>
+        <div>
+            {% for line in origin %}
+            <p>{{ line }}
+            {% endfor %}
+        </div>
+    </section>
     {% endif %}
 
-    <aside><h3>Se også</h3>
-    <div id="related-words">
-        <p>
-            {% for word in related_words %}
-            <a href="./{{ word }}.html">{{ word }}</a>
-            {% endfor %}
-        </p>
-    </div></aside>
+    <aside>
+        <h3>Se også</h3>
+        <div id="related-words">
+            <p>
+                {% for word in related_words %}
+                <a href="./{{ word }}.html">{{ word }}</a>
+                {% endfor %}
+        </div>
+    </aside>
 
     <footer>
-        <p>Tekst er tilgængelig under
-        <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.da">
-            Creative Commons Navngivelse/Del på samme vilkår 3.0
-        </a>.</p>
-        <p>Kode er tilgængelig under en
-        <a href="/LICENSE">
-            MIT licens</a>.</p>
+        <p>
+            Tekst er tilgængelig under
+            <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.da">
+            Creative Commons Navngivelse/Del på samme vilkår 3.0</a>.
+        <p>
+            Kode er tilgængelig under en <a href="/LICENSE">MIT licens</a>.
     </footer>
 </article>
 {% endblock %}
