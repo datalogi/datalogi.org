@@ -1,19 +1,18 @@
-<!DOCTYPE html>
-<meta charset="UTF-8">
-<title>Sprognævn for Datalogi</title>
+{% extends "menu.html" %}
+{% block title %}{% endblock %}
 
+{% block content %}
 <h1>Sprognævn for Datalogi</h1>
-<p>-- Vi lapper det danske sprog,
-så datalogi kan føres på dansk.</p>
-<p>vores mission: ...</p>
-<p><a href="./leksikon.html">Det officielle datalogi leksikon</a></p>
-<p>Dagens ord: <a href="#">gummiand</A></p>
-<p><a href="./medlemskab.html">Medlemskab</a>!</p>
-<div style="width: 200px;">
-    <a href="#">Send et ord</a>
-    <hr>
-    <p>Savner du et ord, et udtryk eller en betydning,
-    så gør os opmærksom på det.</p>
-</div>
-<hr>
-<p>Send et <a href="mailto:kontakt@datalogi.dk">databrev</a></p>
+
+<article style="width: 30em">
+    <p>
+        Det er synd, at vi ikke kan tale om datalogi på dansk.
+        Alt for mange af ordene er engelske eller fordanskninger.
+        Sprognævn for Datalogi er en forening, hvor vi samler og
+        supplerer det danske sprog med datalogibegreber.
+        Det er plads til kreativitet og vi låner gerne (helst
+        endda!) fra andre lande. Definitionerne er skrevet af og
+        til dataloger, men de er tilgængelige for alle.
+    </p>
+</article>
+{% endblock %}
